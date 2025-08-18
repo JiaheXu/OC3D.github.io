@@ -1,0 +1,1195 @@
+<!--  -->
+
+
+<!-- --------------------------------------------------------- -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="robot learning, flow matching, 3D vision, imitation learning, deep learning, robotics, manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="https://3d-flow-actor.github.io//static/images/preview_new.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="628" />
+  
+  <article class="post-content">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="3D FlowMatch Actor" />
+    <meta name="twitter:description"
+        content="3D FlowMatch Actor: Unified 3D Policy for Single- and Dual-Arm Manipulation" />
+    <meta name="twitter:url" content="https://3d-flow-actor.github.io/" />
+    <meta name="twitter:image" content="https://3d-flow-actor.github.io/static/images/preview_new.jpeg" />
+    <meta name="twitter:image" content="https://3d-flow-actor.github.io/static/images/preview_new.jpeg" />
+    <meta name="twitter:image:src" content="https://3d-flow-actor.github.io/static/images/preview_new.jpeg" />
+    <meta name="twitter:image_alt" content="3D FlowMatch Actor" />
+  <article class="post-content">
+
+  <title>3D FlowMatch Actor: Unified 3D Policy for Single- and Dual-Arm Manipulation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+ <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  
+
+  <style>
+    .material-symbols-rounded {
+        font-variation-settings: 'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+    }
+
+
+    .linkscontainer {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .links {
+        /*font-size: 5rem;*/
+        /*margin: 0 -20px;*/
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .links a span.material-symbols-rounded {
+        max-width: 25px;
+    }
+
+    span.material-symbols-rounded {
+        max-width: 25px;
+    }
+
+    .links a {
+        display: inline-flex;
+        /*flex-direction: column;*/
+        align-items: center;
+        text-decoration: none;
+        border-radius: 5px;
+        padding: 5px 7px;
+        color: #f6f3f1 !important;
+        font-family: 'GT Ultra', sans-serif !important;
+        font-weight: 400;
+        /*margin: 0 10px;*/
+        transition: transform .2s;
+        background-color: rgba(var(--btn-bgc), 1);
+    }
+
+
+    .links a:nth-child(1) {
+        --btn-bgc: 237, 100, 90;
+    }
+
+    .links a:hover {
+        transform: scale(1.2);
+        color: #f6f3f1 !important;
+    }
+
+    .links a:active {
+        transform: scale(1.3);
+    }
+
+    .links a:nth-child(2) {
+        --btn-bgc: 47, 138, 196;
+    }
+
+    .links a:nth-child(3) {
+        --btn-bgc: 229, 134, 6;
+    }
+
+    .links a:nth-child(4) {
+        --btn-bgc: 133, 180, 51;
+    }
+
+    .links a:nth-child(5) {
+        --btn-bgc: 204, 97, 176;
+    }
+
+    .links a span.material-symbols-rounded {
+        margin-right: .25rem;
+    }
+
+    .links a:not(:last-child) {
+        /*margin-right: 20px;*/
+    }
+
+
+    .links .material-symbols-rounded {
+        font-size: 1.25rem;
+    }
+
+
+    .links i {
+        font-size: 28px;
+    }
+
+    .fig {
+        width: 100%;
+        display: block;
+        padding: 0 10px;
+        margin: 0 auto;
+    }
+
+    img.arch {
+        max-width: 500px;
+    }
+
+    img.blobs {
+        max-width: 350px;
+    }
+
+    .teaser {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .teaser + section {
+        margin-top: 1rem;
+    }
+
+    .teaser video {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    img.teaser {
+        max-width: 90%;
+    }
+
+    .abstract-imgs .col {
+        display: flex;
+        align-items: center;
+    }
+
+    .videowrapper {
+        float: none;
+        clear: both;
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 25px;
+        height: 0;
+    }
+
+    .wrapwrap {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .videowrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .abstract-capt {
+        font-size: 0.8rem;
+        display: block !important;
+        text-align: center;
+    }
+
+    .latex {
+        display: inline;
+        font-family: 'Math', monospace;
+        font-style: italic;
+    }
+
+    p {
+        margin: 0 !important;
+    }
+
+    .bs-tooltip-end {
+        margin-left: 3px !important;
+    }
+
+    section {
+        margin: 2rem 0;
+    }
+
+    section h5 {
+        margin: 1.5rem 0 0.75rem 0;
+    }
+
+    .iconbutton {
+        padding: 0.1rem 0.3rem;
+        display: flex;
+        border: none !important;
+        background-color: #4B495B !important;
+        color: #f5ece5 !important;
+        font-family: 'GT Ultra', sans-serif !important;
+        font-weight: 400;
+        text-decoration: none !important;
+    }
+
+    .iconbutton span.material-symbols-rounded {
+        font-size: 1.5rem;
+        /* font-weight: 700; */
+    }
+
+    .playpause span.material-symbols-rounded {
+        font-variation-settings: 'wght' 700;
+
+
+    }
+
+    .iconbutton span.material-symbols-rounded:hover {
+        color: #faf6f2 !important;
+    }
+
+    .iconbutton:hover, .iconbutton:focus {
+        background-color: #2E2E38 !important;
+        border-color: none !important;
+        color: #faf6f2 !important;
+    }
+
+    .iconbutton:focus {
+
+    }
+
+    .iconbutton:active {
+        background-color: #09090B !important;
+
+    }
+
+    [data-clipboard-target] {
+        cursor: pointer;
+    }
+
+    [data-clipboard-target]:hover {
+        color: #276FBF !important;
+    }
+
+    /* .emptyrooms {
+         max-width: 80%;
+     }*/
+
+    .emptyrooms {
+        display: flex;
+        /*justify-content: center;*/
+        align-items: flex-start;
+        background-color: #f5ece5;
+    }
+
+    .playpause {
+        flex-shrink: 0;
+    }
+
+    .emptyrooms img:first-child {
+        width: 16.196944%;
+        margin-right: 0.6%;
+    }
+
+    .emptyrooms img:last-child {
+        width: 82.8862479%;
+    }
+
+
+    section h3 {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    section h5, section h3 {
+        justify-content: space-between;
+
+        display: flex;
+        align-items: center;
+    }
+
+    h3, h5 {
+        scroll-margin-top: 25px;
+        /*display: inline-block;*/
+    }
+
+    h3[data-exclude-link], h5[data-exclude-link] {
+        cursor: initial;
+    }
+
+    h3 span, h5 span {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    h3 span:hover, h5 span:hover {
+
+        color: #276FBF !important;
+    }
+
+    /*
+            h3[data-exclude-link]:hover, h5[data-exclude-link]:hover {
+                color: initial !important;
+            }*/
+
+    .carousel {
+        margin: 1rem 0;
+    }
+
+    .ltx {
+        vertical-align: baseline;
+    }
+
+    .cit {
+        background-color: rgba(26, 25, 31, 0.05);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        display: inline-block;
+        margin: 0 auto;
+        overflow-y: hidden;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        font-family: 'Code', monospace;
+    }
+
+    .cit_cont {
+        display: flex;
+    }
+
+    .video-container {
+        position: relative;
+    }
+
+    /* .video-container .video-border {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         box-shadow: inset 0px 0px 0px 6px #f5ece5;
+     }*/
+
+    .video-container video {
+        width: 100%;
+        display: block;
+        clip-path: inset(5px 5px);
+    }
+
+    .video-container img {
+        width: 100%;
+    }
+
+    .splide > * {
+        font-weight: 500;
+        position: initial;
+    }
+
+    .splide__arrow {
+        position: initial;
+        background: none;
+        /*opacity: 1;*/
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        transform: none;
+        font-size: 1.25rem;
+        justify-content: end;
+        width: 1.5em;
+    }
+
+    .splide__arrow--prev {
+        justify-content: left;
+    }
+
+    .splide__slide {
+        height: 0;
+    }
+
+    .splide__slide.is-visible {
+        height: auto;
+    }
+
+    .move-cont {
+        display: flex;
+    }
+
+    .move-cont > video {
+        max-width: 100%;
+    }
+
+    .splide__pagination__page.is-active {
+        background: #000;
+    }
+
+    .splide__pagination__page {
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .splide__pagination {
+        margin-top: 0.25rem;
+    }
+
+    .splide__pagination__page:hover {
+        background: #aaa;
+        transform: scale(1.2);
+    }
+
+    .splide__track_and_arrows {
+        display: flex;
+    }
+
+    .splide__arrows {
+        display: flex;
+        align-items: center;
+    }
+
+    .styletransfer {
+        display: grid;
+        grid-row-gap: .5rem;
+        grid-template-columns: 1fr 20px 1fr 1fr 1fr 20px 1fr 1fr 1fr;
+    }
+
+    .inversion {
+        display: grid;
+        /*grid-row-gap: .5rem;*/
+        /*grid-template-columns: 1fr 20px 1fr 1fr 1fr 20px 1fr 1fr 1fr;*/
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    .styletransfer img {
+        max-width: 100%;
+        clip-path: inset(2px 2px);
+    }
+
+    .inversion span {
+        text-align: center;
+    }
+
+    .inversion img {
+        max-width: 100%;
+        clip-path: inset(2px 2px);
+    }
+
+
+    #inversion ~ .splide img {
+        max-width: 100%;
+        padding: 0.3rem;
+    }
+
+    .styletransfer span {
+        text-align: center;
+    }
+
+    .styletransfer span:nth-child(2) {
+        grid-column-start: 3;
+        grid-column-end: 6;
+    }
+
+    .styletransfer span:nth-child(3) {
+        grid-column-start: 7;
+        grid-column-end: 10;
+    }
+
+
+    @media (min-width: 992px) {
+        .container {
+            max-width: 1050px;
+        }
+    }
+
+    .inversion_subheader {
+        font-weight: bold;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    .inversion_subheader:not(:first-of-type) {
+        margin-top: 0.2rem;
+    }
+
+    .inversion_subheader + .splide {
+        margin: 0.2rem 0 !important;
+    }
+
+    /*
+            .move-cont .video-container:nth-child(8), .move-cont .video-container:nth-child(7) {
+                display: none;
+            }*/
+
+    @media (max-width: 991px) {
+        /*
+                    .move-cont .video-container:nth-child(5), .move-cont .video-container:nth-child(6) {
+                        display: none;
+                    }*/
+        .move-cont > video {
+            max-width: 150%;
+            clip-path: inset(0 33.333333% 0 0);
+        }
+
+        header h3 {
+            font-size: 1.5rem;
+        }
+
+        .cit {
+            /*font-size: 12px !important;*/
+        }
+
+        .emptyrooms img:last-child {
+            width: 99.6% !important;
+        }
+
+        .emptyrooms img:first-child {
+            width: 19.46% !important;
+            margin-right: 0.7522% !important;
+        }
+
+        .styletransfer {
+            display: grid;
+            grid-template-columns: 1fr 15px 1fr 1fr 15px 1fr 1fr !important;
+        }
+
+        .styletransfer img:nth-child(9n+3), .styletransfer img:nth-child(9n-1) {
+            display: none;
+        }
+
+        .styletransfer span:nth-child(2) {
+            grid-column-start: 3;
+            grid-column-end: 5;
+        }
+
+        .styletransfer span:nth-child(3) {
+            grid-column-start: 6;
+            grid-column-end: 8;
+        }
+    }
+
+    .author {
+        padding: 0 0.6rem;
+    }
+
+    @media (max-width: 767px) {
+        html, body {
+
+            /*font-size: 16px;*/
+        }
+
+        .author {
+            font-size: 18px;
+        }
+
+        .insts {
+            font-size: 16px;
+        }
+
+        /*.move-cont .video-container:nth-child(4) {
+            display: none;
+        }*/
+        .move-cont > video {
+            max-width: 200%;
+            clip-path: inset(0 50% 0 0);
+        }
+
+        .inversion *:nth-child(5n+2) {
+            display: none;
+        }
+
+        .inversion {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        .emptyrooms img:last-child {
+            width: 124.477307% !important;
+        }
+
+        .emptyrooms img:first-child {
+            width: 24.3243243% !important;
+            margin-right: 0.9% !important;
+        }
+
+        .styletransfer {
+            display: grid;
+            grid-template-columns: 1fr 10px 1fr 10px 1fr !important;
+        }
+
+        .styletransfer img:nth-child(9n+2), .styletransfer img:nth-child(9n-2) {
+            display: none;
+        }
+
+        .styletransfer span:nth-child(2) {
+            grid-column-start: 3;
+            grid-column-end: 4;
+        }
+
+        .styletransfer span:nth-child(3) {
+            grid-column-start: 5;
+            grid-column-end: 6;
+        }
+    }
+
+    @media (max-width: 540px) {
+        .links a span.material-symbols-rounded {
+            max-width: 20px;
+        }
+
+        .links {
+            gap: 12px;
+        }
+    }
+
+    @media (max-width: 510px) {
+        /*
+                    .move-cont .video-container:nth-child(3) {
+                        display: none;
+                    }*/
+        .move-cont > video {
+            max-width: 300%;
+            clip-path: inset(0 66.6666666% 0 0);
+        }
+
+
+        .inversion {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .inversion span:nth-child(n+4) {
+            grid-row: 3;
+        }
+
+        .links .material-symbols-rounded {
+            /*display: none;*/
+            font-size: 1rem;
+        }
+
+        .links a span.material-symbols-rounded {
+            max-width: 18px;
+        }
+
+    }
+
+    @media (max-width: 399px) {
+
+    }
+
+    @media (max-width: 380px) {
+        /*.links .material-symbols-rounded {*/
+        /*    display: none;*/
+        /*    padding: 5px 10px;*/
+        /*    !*font-size: 1rem;*!*/
+        /*}*/
+    }
+
+    @media (max-width: 575px) {
+
+        img.blobs {
+            max-width: 300px;
+        }
+
+        .emptyrooms img:last-child {
+            width: 165.941536% !important;
+        }
+
+        .emptyrooms img:first-child {
+            width: 32.4269205% !important;
+            margin-right: 1.15% !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .abstract-imgs .col-md-7 {
+            border-right: 1px solid #1f1e1d;
+        }
+
+        img.arch, img.blobs {
+            max-width: 600px;
+        }
+
+    }
+
+
+</style>
+</head>
+<!-- --------------------------------------------------------- -->
+<body>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">3D FlowMatch Actor: Unified 3D Policy for Single- and Dual-Arm Manipulation</h1>
+              <!-- <div class="is-size-4 publication-authors"> -->
+                <div class="publication-authors is-size-4">
+                    <span class="author-block">
+                        <a href="https://nickgkan.github.io">Nikolaos Gkanatsios</a><sup>1,†</sup>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span class="author-block">
+                        <a href="https://github.com/JiaheXu">Jiahe Xu</a><sup>1,†</sup>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span class="author-block">
+                        <a href="https://mbronars.github.io/">Matthew Bronars</a><sup>1</sup>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span class="author-block">
+                        <a href="https://cs.gmu.edu/~amousavi/">Arsalan Mousavian</a><sup>2</sup>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span class="author-block">
+                        <a href="http://twke18.github.io/">Tsung-Wei Ke</a><sup>3</sup>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span class="author-block">
+                        <a href="https://www.cs.cmu.edu/~katef/">Katerina Fragkiadaki</a><sup>1</sup>
+                    </span>
+                    </div>
+
+                    <div class="publication-authors is-size-5">
+                    <sup>1</sup> Carnegie Mellon University &nbsp;&nbsp;
+                    <sup>2</sup> NVIDIA &nbsp;&nbsp;
+                    <sup>3</sup> National Taiwan University
+                    </div>
+
+                    <div class="equal-contribution is-size-5">
+                    <sup>†</sup> Equal contribution
+                    </div>
+
+            <div class="linkscontainer is-size-4">
+              <div class="links mt-4">
+              <a href="https://arxiv.org/abs/2402.10885" target="_blank"><span class="material-symbols-rounded">
+              description
+              </span><span>Paper</span></a>
+              <a href="https://github.com/nickgkan/3d_flowmatch_actor" target="_blank"><span class="material-symbols-rounded">
+              code
+              </span><span>Code</span></a>
+              <a href="https://huggingface.co/katefgroup/3d_flowmatch_actor/tree/main" target="_blank"><span class="material-symbols-rounded">
+              science
+              </span><span>Checkpoints</span></a>
+              <a href="https://huggingface.co/katefgroup/3d_flowmatch_actor/tree/main" target="_blank"><span class="material-symbols-rounded">
+              folder
+              </span><span>Data</span></a>
+              </div>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <h2 class="title is-3">3D FlowMatch Actor</h2>
+            </div>
+          </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <img src="./static/images/diagram_gif.gif" alt="input image" style="vertical-align:middle;margin:0px 0px" width="100%"/>
+            </div>
+          </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <!-- <h2 class="title is-3">Abstract</h2> -->
+                <div class="content has-text-justified">
+                    <p>
+                    We present 3D FlowMatch Actor (3DFA), a 3D policy architecture for robot manipulation that combines flow matching for trajectory prediction with 3D pretrained visual scene representations for learning from demonstration. 3DFA leverages 3D relative attention between action and visual tokens during action denoising, building on prior work in 3D diffusion-based single-arm policy learning. Through a combination of flow matching and targeted system-level and architectural optimizations, 3DFA achieves over 30x faster training and inference than previous 3D diffusion-based policies, without sacrificing performance. On the bimanual PerAct2 benchmark, it establishes a new state of the art, outperforming the next-best method by an absolute margin of 41.4%. In extensive real-world evaluations, it surpasses strong baselines with up to 1000x more parameters and significantly more pretraining. In unimanual settings, it sets a new state of the art on 74 RLBench tasks by directly predicting dense end-effector trajectories, eliminating the need for motion planning. Comprehensive ablation studies underscore the importance of our design choices for both policy effectiveness and efficiency.
+                </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <!-- Zero Shot. -->
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">State-of-the-art on PerAct2</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                        We train a <b>multi-task</b> 3D FlowMatch Actor on the 13 bimanual manipulation tasks of PerAct2, using 100 demos per task. 3DFA achieves an <b>absolute performance gain of 41.4% over π<sub>0</sub></b> and <b>53.1% over the next best competitor</b>. We also show results on few indicative tasks.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/peract2_all.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
+                    </div>
+
+                    <h2 class="title is-3" style="margin-top: 0;">30x faster to train and run inference than 3D Diffuser Actor</h2>
+
+                    <div class="content has-text-justified">
+                        <p>
+                            3DFA achieves a 30x training and inference speedup over 3D Diffuser Actor, without any performance loss. This is due to a series of architectural and system-level optimizations, including the use of flow matching, a largely improved data loading strategy and a more efficient point sampling method. We show the impact of each optimization on training and inference speed.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/ablations.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
+                    </div>
+
+                    <h2 class="title is-3" style="margin-top: 0;">Multi-task 3DFA outperforms policies optimized for single tasks</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                        We trained 3D FlowMatch Actor on all 13 tasks simultaneously, but most previous baselines were trained on each task separately and evaluate on a subset of tasks. We evaluate 3DFA on the same 5 tasks that PPI and KStarDiffuser select for a direct comparison. We achieve a <b>13.6% absolute improvement</b> over PPI and a <b>24% absolute improvement</b> over KStarDiffuser.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/peract2_ppi.jpg" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
+                    </div>
+
+                    <h2 class="title is-3" style="margin-top: 0;">Sample execution videos of 3D FlowMatch Actor on the PerAct2 tasks</h2>
+
+                    <div class="content has-text-centered">
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_lift_ball.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_handover_item.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_pick_plate.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_lift_tray.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_pick_laptop.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_straighten_rope.mp4"
+                                type="video/mp4">
+                        </video>
+
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_sweep_to_dustpan.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_put_item_in_drawer.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_put_bottle_in_fridge.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_handover_item_easy.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_take_tray_out_of_oven.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
+                        <source src="./static/videos/peract2/bimanual_dual_push_buttons.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="content has-text-justified">
+                        <p>
+                        We show the denoising process of the predicted keyposes as well as the actual execution for the task of pushing a heavy box:
+                        </p>
+                    </div>
+                    <div class="content has-text-centered" style="display: flex; justify-content: center; gap: 10px;">
+                        <div style="width: 32%; text-align: center;">
+                            <p>First keypose (behind box)</p>
+                            <video autoplay controls muted loop playsinline width="100%">
+                            <source src="./static/videos/denoising_0.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div style="width: 32%; text-align: center;">
+                            <p>Second keypose (to target area)</p>
+                            <video autoplay controls muted loop playsinline width="100%">
+                            <source src="./static/videos/denoising_1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div style="width: 32%; text-align: center;">
+                            <p>Execution</p>
+                            <video autoplay controls muted loop playsinline width="92%">
+                            <source src="./static/videos/peract2/bimanual_push_box.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <!-- Zero Shot. -->
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">Real-world bimanual manipulation results</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                        We construct a real-world multi-task bimanual manipulation benchmark with 10 challenging tasks, using Mobile Aloha. Each model is trained on 40 demos per tasks. <b>3DFA and baselines are trained to predict closed-loop trajectories</b>, not keyposes.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/real_world_tasks.jpg" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
+                    </div>
+
+                    <h2 class="title is-3" style="margin-top: 0;">3DFA <b>largely outperforms π<sub>0</sub></b> and iDP3</h2>
+
+                    <div class="content has-text-justified">
+                        <p>
+                            3DFA solves many more tasks, while <b>running faster</b> and having <b>1000 times less parameters</b> than π<sub>0</sub>.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered">
+                        <img src="./static/images/real_world_results.jpg" alt="input image" style="vertical-align:middle;margin:0px 0px" width="95%"/>
+                    </div>
+
+                    <div class="content has-text-justified">
+                        <p>
+                        We show successful rollouts of our policy:
+                        </p>
+                    </div>
+
+                    <h2 class="title is-3" style="margin-top: 0;">Sample execution videos of 3D FlowMatch Actor on the real-world tasks </h2>
+
+                    <div class="content has-text-centered">
+                        <video id="lift_ball" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/lift_ball.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="straighten_rope" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/straighten_rope.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="pickup_plate" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/pickup_plate.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="stack_bowls" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/stack_bowls.mp4"
+                                type="video/mp4">
+                        </video>
+
+                        <video id="put_marker_into_cup" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/put_marker_into_cup.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="handover_block" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/handover_block.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="stack_blocks" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/stack_blocks.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="open_marker" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/open_marker.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="close_ziploc" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/close_ziploc.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="insert_battert" autoplay controls muted loop playsinline width="18%">
+                        <source src="./static/videos/realworld/insert_battery.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                  
+                    <div class="content has-text-justified">
+                        <p>
+                        We show common failure cases of 3DFA in the real world:
+                        </p>
+                    </div>
+
+                    <div class="content has-text-centered">
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="95%">
+                        <source src="./static/videos/failure_cases_1x.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- hack to pull the below up vertically -->
+    <span style="display:block; margin-top:-1.75em;"/>
+
+    <section class="section">
+        <!-- Zero Shot. -->
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">3D FlowMatch Actor is a more accessible drop-in replacement for 3D Diffuser Actor - Results on unimanual PerAct</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                        We evaluate our design choices on the unimanual multi-task PerAct benchmark, which contains 18 tasks and 100 demos per task. 3DFA performs on par with 3D Diffuser Actor, even when only two cameras are used, while being 6.5x faster to train and 28x faster at inference.
+                        </p>
+                    </div>
+                    <div class="content has-text-centered">
+                        <img src="./static/images/peract.jpg" alt="input image" style="vertical-align:middle;margin:0px 0px" width="72%"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <!-- Zero Shot. -->
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">3D FlowMatch Actor can predict trajectories and solve 74 RLBench tasks</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                        We train 3D FlowMatch Actor on 74 unimanual RLBench tasks. While many of them can be solved by keypose-prediction models, there are tasks that require continuous interaction with the environment. We train 3DFA to jointly predict the next keypose and the trajectory from the current pose to the keypose in a single forward pass, showing the universality of our approach. <b>3DFA sets a new state of the art on the 74-task benchmark</b>. Notably, 3DFA uses two cameras, while baselines use 3-5 cameras.
+                        </p>
+                    </div>
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/hiveformer_74.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
+                    </div>
+
+                    <div class="content has-text-justified">
+                        <p>
+                        We additionally consider a subset of those 74 tasks that previous works have marked as challenging to complete with keypose-prediction models. <b>3DFA outperforms all prior arts on the tasks that require continuous interaction with the environment</b>.
+                        </p>
+                    </div>
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/chainedd_tasks.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
+                    </div>
+
+
+                    <div class="content has-text-justified">
+                        <p>
+                        We show videos of 3DFA solving challenging tasks that previous approaches struggle with.
+                        </p>
+                    </div>
+                    <div class="content has-text-centered">
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/close_door.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/insert_usb_in_computer.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/open_drawer.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/open_fridge.mp4"
+                                type="video/mp4">
+                        </video>
+
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/put_books_on_bookshelf.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/straighten_rope.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/put_knife_on_chopping_board.mp4"
+                                type="video/mp4">
+                        </video>
+                        <video id="put_grapes" autoplay controls muted loop playsinline width="24%">
+                        <source src="./static/videos/rlbench/reach_and_drag.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+          <h2 class="title">BibTeX</h2>
+          <pre><code>@article{3d_flowmatch_actor,
+            author = {Gkanatsios, Nikolaos and Xu, Jiahe and Bronars, Matthew and Mousavian, Arsalan and Ke, Tsung-Wei and Fragkiadaki, Katerina},
+            title = {3D FlowMatch Actor: Unified 3D Policy for Single- and Dual-Arm Manipulation},
+            journal = {Arxiv},
+            year = {2025}
+        }</code></pre>
+        </div>
+      </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <!-- TODO: UPDATE -->
+                <a class="icon-link" href="https://arxiv.org/abs/2402.10885" target="_blank">
+                    <i class="ai ai-arxiv"></i>
+                </a>
+                &nbsp;
+                <!-- TODO: UPDATE -->
+                <a class="icon-link" href="https://arxiv.org/pdf/2402.10885.pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+                &nbsp;
+                <a class="icon-link" href="https://github.com/nickgkan/3d_flowmatch_actor"
+                    target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <div class="columns is-centered">
+                <div class="content">
+                    <p>
+                        Page source code was adapted from
+                        <a href="https://nerfies.github.io" target="_blank">here</a>
+                        and
+                        <a href="https://3d-diffuser-actor.github.io/"
+                            target="_blank">here</a>,
+                        and can be found in <a
+                            href="https://github.com/3d-flow-actor/3d-flow-actor.github.io"
+                            target="_blank">this repository</a>.
+                    </p>
+                </div>
+            </div>
+    </footer>
+</body>
+
+</html>
