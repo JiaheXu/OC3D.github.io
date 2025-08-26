@@ -1,8 +1,8 @@
-# 3D FlowMatch Actor
+# OC3D Object-Centric 3D Diffuser
 
-This repository contains the source code for the [3D FlowMatch Actor project page](https://3d-flow-actor.github.io/).
+This repository contains the source code for the [OC3D project page](https://jiahexu.github.io/OC3D.github.io/).
 
-If you find 3D FlowMatch Actor useful for your work, please cite:
+<!-- If you find 3D FlowMatch Actor useful for your work, please cite:
 
 ```bibtex
 @article{3d_flowmatch_actor,
@@ -11,4 +11,4 @@ If you find 3D FlowMatch Actor useful for your work, please cite:
   journal = {Arxiv},
   year = {2025}
 }
-```
+``` -->
