@@ -769,13 +769,12 @@
             <div class="linkscontainer is-size-4">
               <div class="links mt-4">
               <a>
-              description
               </span><span>Paper(comming soon)</span></a>
               <a>
-              code (coming soon)
+
               </span><span>Code</span></a>
               <a href="https://huggingface.co/katefgroup/3d_flowmatch_actor/tree/main" target="_blank"><span class="material-symbols-rounded">
-              science
+   
               </span><span>Checkpoints</span></a>
               <a href="https://huggingface.co/katefgroup/3d_flowmatch_actor/tree/main" target="_blank"><span class="material-symbols-rounded">
               folder
@@ -799,7 +798,7 @@
           </div>
           <div class="columns is-centered has-text-centered">
             <div class="column">
-                <img src="./static/images/diagram_gif.gif" alt="input image" style="vertical-align:middle;margin:0px 0px" width="100%"/>
+                <img src="./static/OC3D/teaser_full.png" alt="input image" style="vertical-align:middle;margin:0px 0px" width="100%"/>
             </div>
           </div>
           <div class="columns is-centered has-text-centered">
@@ -813,191 +812,28 @@
         </div>
     </section> 
 
-    <!-- <section class="section">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column">
-                    <h2 class="title is-3">State-of-the-art on PerAct2</h2>
-                    <div class="content has-text-justified">
-                        <p>
-                        We train a <b>multi-task</b> 3D FlowMatch Actor on the 13 bimanual manipulation tasks of PerAct2, using 100 demos per task. 3DFA achieves an <b>absolute performance gain of 41.4% over π<sub>0</sub></b> and <b>53.1% over the next best competitor</b>. We also show results on few indicative tasks.
-                        </p>
-                    </div>
-
-                    <div class="content has-text-centered" style="margin-bottom: 40px;">
-                        <img src="./static/images/peract2_all.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
-                    </div>
-
-                    <h2 class="title is-3" style="margin-top: 0;">30x faster to train and run inference than 3D Diffuser Actor</h2>
-
-                    <div class="content has-text-justified">
-                        <p>
-                            3DFA achieves a 30x training and inference speedup over 3D Diffuser Actor, without any performance loss. This is due to a series of architectural and system-level optimizations, including the use of flow matching, a largely improved data loading strategy and a more efficient point sampling method. We show the impact of each optimization on training and inference speed.
-                        </p>
-                    </div>
-
-                    <div class="content has-text-centered" style="margin-bottom: 40px;">
-                        <img src="./static/images/ablations.jpg" alt="input image" style="vertical-align:middle;margin:0px;" width="95%"/>
-                    </div>
-
-                    <h2 class="title is-3" style="margin-top: 0;">Multi-task 3DFA outperforms policies optimized for single tasks</h2>
-                    <div class="content has-text-justified">
-                        <p>
-                        We trained 3D FlowMatch Actor on all 13 tasks simultaneously, but most previous baselines were trained on each task separately and evaluate on a subset of tasks. We evaluate 3DFA on the same 5 tasks that PPI and KStarDiffuser select for a direct comparison. We achieve a <b>13.6% absolute improvement</b> over PPI and a <b>24% absolute improvement</b> over KStarDiffuser.
-                        </p>
-                    </div>
-
-                    <div class="content has-text-centered" style="margin-bottom: 40px;">
-                        <img src="./static/images/peract2_ppi.jpg" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
-                    </div>
-
-                    <h2 class="title is-3" style="margin-top: 0;">Sample execution videos of 3D FlowMatch Actor on the PerAct2 tasks</h2>
-
-                    <div class="content has-text-centered">
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_lift_ball.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_handover_item.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_pick_plate.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_lift_tray.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_pick_laptop.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_straighten_rope.mp4"
-                                type="video/mp4">
-                        </video>
-
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_sweep_to_dustpan.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_put_item_in_drawer.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_put_bottle_in_fridge.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_handover_item_easy.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_take_tray_out_of_oven.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_grapes" autoplay controls muted loop playsinline width="16%">
-                        <source src="./static/videos/peract2/bimanual_dual_push_buttons.mp4"
-                                type="video/mp4">
-                        </video>
-                    </div>
-
-                    <div class="content has-text-justified">
-                        <p>
-                        We show the denoising process of the predicted keyposes as well as the actual execution for the task of pushing a heavy box:
-                        </p>
-                    </div>
-                    <div class="content has-text-centered" style="display: flex; justify-content: center; gap: 10px;">
-                        <div style="width: 32%; text-align: center;">
-                            <p>First keypose (behind box)</p>
-                            <video autoplay controls muted loop playsinline width="100%">
-                            <source src="./static/videos/denoising_0.mp4" type="video/mp4">
-                            </video>
-                        </div>
-
-                        <div style="width: 32%; text-align: center;">
-                            <p>Second keypose (to target area)</p>
-                            <video autoplay controls muted loop playsinline width="100%">
-                            <source src="./static/videos/denoising_1.mp4" type="video/mp4">
-                            </video>
-                        </div>
-
-                        <div style="width: 32%; text-align: center;">
-                            <p>Execution</p>
-                            <video autoplay controls muted loop playsinline width="92%">
-                            <source src="./static/videos/peract2/bimanual_push_box.mp4" type="video/mp4">
-                            </video>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
+   
 
     <section class="section">
         <!-- Zero Shot. -->
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column">
-                    <h2 class="title is-3">Real-world  manipulation results</h2>
+                    <h2 class="title is-3">Success rate of 5 Real-world  manipulation results</h2>
                     <div class="content has-text-justified">
                         <p>
-                        We construct a real-world multi-task manipulation benchmark with 5 tasks. Each model is trained on 20 demos per tasks.
+                        We tested our method with 5 tasksm with only one model.
                         </p>
                     </div>
 
                     <div class="content has-text-centered" style="margin-bottom: 40px;">
-                        <img src="./static/images/real_world_tasks.jpg" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
+                        <img src="./static/images/OC3D/tasks.png" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
                     </div>
 
-                    <!-- <h2 class="title is-3" style="margin-top: 0;">3DFA <b>largely outperforms π<sub>0</sub></b> and iDP3</h2>
-
-                    <div class="content has-text-justified">
-                        <p>
-                            3DFA solves many more tasks, while <b>running faster</b> and having <b>1000 times less parameters</b> than π<sub>0</sub>.
-                        </p>
+                    <div class="content has-text-centered" style="margin-bottom: 40px;">
+                        <img src="./static/images/OC3D/bar_plot.png" alt="input image" style="vertical-align:middle; margin:0px;" width="95%"/>
                     </div>
 
-                    <div class="content has-text-centered">
-                        <img src="./static/images/real_world_results.jpg" alt="input image" style="vertical-align:middle;margin:0px 0px" width="95%"/>
-                    </div>
-
-                    <div class="content has-text-justified">
-                        <p>
-                        We show successful rollouts of our policy:
-                        </p>
-                    </div> -->
-
-                    <h2 class="title is-3" style="margin-top: 0;">Sample execution videos of 3D FlowMatch Actor on the real-world tasks </h2>
-
-                    <div class="content has-text-centered">
-                        <video id="lift_ball" autoplay controls muted loop playsinline width="18%">
-                        <source src="./static/videos/realworld/lift_ball.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="straighten_rope" autoplay controls muted loop playsinline width="18%">
-                        <source src="./static/videos/realworld/straighten_rope.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="pickup_plate" autoplay controls muted loop playsinline width="18%">
-                        <source src="./static/videos/realworld/pickup_plate.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="stack_bowls" autoplay controls muted loop playsinline width="18%">
-                        <source src="./static/videos/realworld/stack_bowls.mp4"
-                                type="video/mp4">
-                        </video>
-                        <video id="put_marker_into_cup" autoplay controls muted loop playsinline width="18%">
-                        <source src="./static/videos/realworld/put_marker_into_cup.mp4"
-                                type="video/mp4">
-                        </video>
-    
-                    </div>
                   
                     <!-- <div class="content has-text-justified">
                         <p>
